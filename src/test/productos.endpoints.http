@@ -1,0 +1,60 @@
+@host = 127.0.0.1
+@port = 3001
+@endpointTemplate = api/v1/productos
+@contentType = application/json
+@productoId = 699e3893abf77de5a1940515
+@apiKey = GOGOGO
+
+### crear nuevo producto con todos los campos correctos
+POST http://{{host}}:{{port}}/{{endpointTemplate}}
+Content-Type: {{contentType}}
+
+{
+    "producto": "Teclado Logitech G513RGB\"",
+    "stockAmount": 10,
+    "fechaIngreso": "2025-10-28"
+}
+
+### crear nuevo producto con campos erroneos -> ERROR
+POST http://{{host}}:{{port}}/{{endpointTemplate}}
+Content-Type: {{contentType}}
+
+{
+    "producto": "",
+    "stockAmount": 4
+}
+
+### traer los productos
+GET http://{{host}}:{{port}}/{{endpointTemplate}}
+
+### traer un producto por id
+GET http://{{host}}:{{port}}/{{endpointTemplate}}/{{productoId}}
+
+
+
+### editar stockAmount de un producto por id con apiKey
+PUT http://{{host}}:{{port}}/{{endpointTemplate}}/{{productoId}}
+Content-Type: {{contentType}}
+x-api-key: {{apiKey}}
+
+{
+    "newStockAmount": 30
+}
+
+
+### editar stockAmount de un producto por id sin apiKey -> ERROR
+PUT http://{{host}}:{{port}}/{{endpointTemplate}}/{{productoId}}
+Content-Type: {{contentType}}
+
+{
+    "newStockAmount": 25
+}
+
+### eliminar un producto por su id con apiKey
+DELETE http://{{host}}:{{port}}/{{endpointTemplate}}/{{productoId}}
+x-api-key: {{apiKey}}
+
+### eliminar un producto por su id sin apiKey
+DELETE http://{{host}}:{{port}}/{{endpointTemplate}}/{{productoId}}
+
+
